@@ -21,7 +21,7 @@ app.listen(5000, () => {
 })
 
 mongoose
-.connect("mongodb+srv://messiwassim2006:pass1%40@cluster0.hxod3k0.mongodb.net/ramzy?retryWrites=true&w=majority&appName=Cluster0")
+.connect("url")
 .then(() => {
     console.log("Connected to DB")
 })
