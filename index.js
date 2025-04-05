@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
-import Drink from "./models/drinks.js"
 import { drinksRouter } from "./routes/drinks.js"
+import { userRouter } from "./routes/user.js"
 
 const app = express()
 
@@ -9,6 +9,7 @@ app.use(express.json())
 
 
 app.use("/drinks", drinksRouter)
+app.use("/user", userRouter)
 
 
 app.get("/", (req, res) => {
