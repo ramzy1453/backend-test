@@ -1,6 +1,6 @@
 import User from "../models/user.js"
 import bcrypt from "bcryptjs"
-
+import jwt from "jsonwebtoken"
 
 export const createUserRegister = async (req, res) => {
     const userInfos = req.body
@@ -53,7 +53,64 @@ export const login = async (req, res) => {
     }
 
     // Everything is fine.
+
+    const token = jwt.sign({ id : userExists._id }, "super-secret-key", {
+        expiresIn : '1d'
+    })
+
+    userExists.password = undefined
+    return res.status(200).send({
+        success : true,
+        message : "User logged in successfully",
+        data : {
+            user : userExists,
+            token : token
+        }
+    })
+
+
+}
+
+export const getProfile = async (req, res) => {
+    const userId = req.userId
+
+    const user = await User.findById(userId)
+
+    if(!user) {
+        return res.status(400).send({
+            success : false,
+            message : "user does not exists",
+        })
+    }
+
+
+    return res.status(200).send({
+        success : true,
+        message : "Retrieve profile successfully",
+        data : user
+    })
     
+}
 
 
+
+export const updateProfile = async (req, res) => {
+    const userId = req.userId
+    const newProfileInfos = req.body
+    const user = await User.findByIdAndUpdate(userId, newProfileInfos, { new : true })
+
+    if(!user) {
+        return res.status(400).send({
+            success : false,
+            message : "user does not exists",
+        })
+    }
+
+
+    return res.status(200).send({
+        success : true,
+        message : "Updated profile successfully",
+        data : user
+    })
+    
 }
