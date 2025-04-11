@@ -48,6 +48,7 @@ export const updateDrink = async (req, res) => {
     const id = req.params.id
     const newInfos = req.body
     const updatedDrink = await Drink.findByIdAndUpdate(id, newInfos, { new : true })
+    
     res.status(200).send({
         success : true,
         message : "Drink updated successfully",

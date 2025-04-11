@@ -4,16 +4,18 @@ const drinksSchema = new mongoose.Schema({
     name : {
         type : String,
         required : true,
-        minLength : 1
+        minLength : 1,
+        trim : true
     },
     nature : {
         type : String,
         required : true,
-        minLength : 1
+        minLength : 1,
+        trim : true
     },
     price : {
         type : Number,
-        default : 0,
+        default : 20,
         min : 10
     },
 })

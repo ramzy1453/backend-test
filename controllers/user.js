@@ -27,3 +27,33 @@ export const createUserRegister = async (req, res) => {
     })
 
 }
+
+export const login = async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    const userExists = await User.findOne({ email : email })
+
+    if(!userExists) {
+        return res.status(400).send({
+            success : false,
+            message : "Email is wrong or user does not exists",
+        })
+    }
+
+    // Email is correct, now we will see the password
+
+    const isPasswordValid = await bcrypt.compare(password, userExists.password)
+
+    if(!isPasswordValid) {
+        return res.status(400).send({
+            success : false,
+            message : "password is wrong or user does not exists",
+        })
+    }
+
+    // Everything is fine.
+    
+
+
+}
